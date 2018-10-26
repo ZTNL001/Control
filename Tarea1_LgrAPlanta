@@ -1,0 +1,86 @@
+%limpieza
+clc
+clear all
+disp('----------------------------------------')
+disp('Hecho por Tapia Guerrero Esteban')
+disp('Control - Ejercicio Matlab 2do Parcial')
+disp('----------------------------------------')
+
+%Ingreso de la funcion
+num=[1,4,5];
+den=[1,9,31,59,60];
+
+%Localizacion de zeros y polos
+disp('-------------------------------------------------------------------------')
+disp('-Localizacion de zeros y polos-')
+disp('-------------------------------------------------------------------------')
+zeros=roots(num);
+zeros
+Polos=roots(den);
+Polos
+
+LGR_En_3=-720+180*(2*3-1)
+disp('Solo hay un LGR entre -3 y -4')
+
+%Asintota y su cruce con el eje real
+disp('-------------------------------------------------------------------------')
+disp('-Calculo de asintotas, cruce con el eje real y angulo-')
+disp('-------------------------------------------------------------------------')
+NumAsintotas=4-2
+AnguloAsintota1=180*((2*0+1)/NumAsintotas)
+AnguloAsintota2=180*((2*1+1)/NumAsintotas)
+CruceAsintotasEjeReal=((+(-4)+(-3)+(-1+2i)+(-1-2i)-(-2+i)-(-2-i))/NumAsintotas)
+
+%P/ puntos de ruptura e ingreso
+disp('-------------------------------------------------------------------------')
+disp('-Puntos de ruptura e ingreso-')
+disp('-------------------------------------------------------------------------')
+numS=poly2sym(num);
+denS=poly2sym(den);
+h=(denS/numS);
+deriv=diff(h);
+[numd dend]=numden(deriv);
+c=coeffs(numd);
+c=fliplr(c);
+Puntos=roots(c);
+Puntos
+disp('El valor a tomar en cuenta como punto de ruptura es en -3.44 por encontrarse intermedio entre dos polos y ubicado en LGR')
+
+disp('-------------------------------------------------------------------------')
+disp('-Angulos de salida y entrada-')
+disp('-------------------------------------------------------------------------')
+teta11=atand(2/2);
+teta12=atand(2/3);
+teta13=90;
+ro11=atand(1/1);
+ro12=atand(2);
+AnguloSalida1=180-teta11-teta12-teta13+ro11+ro12
+
+teta21=atand(-2/2);
+teta22=atand(-2/3);
+teta23=90;
+ro21=atand(-1/1);
+ro22=atand(-2);
+AnguloSalida2=-teta21-teta22-teta23+ro21+ro22
+
+ro31=90;
+teta31=atand(1/1);
+teta32=-atand(3/1);
+teta33=atand(1/1);
+teta34=atand(1/2);
+AnguloIngreso1=180-ro31+teta31+teta32+teta33+teta34
+
+ro41=90;
+teta41=atand(-1/1);
+teta42=-atand(-3/1);
+teta43=atand(-1/1);
+teta44=atand(-1/2);
+AnguloIngreso2=-ro41+teta41+teta42+teta43+teta44
+
+disp('El angulo de salida para los polos complejos, es +- 119.74º')
+disp('El angulo de entrada para los Zeros complejos, es +- 135º')
+
+%grafica con rlocus
+k=1;
+g=zpk(zeros,Polos,k);
+rlocus(g)
